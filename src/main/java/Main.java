@@ -1,9 +1,7 @@
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 class WrongStudentName extends Exception { }
-class WrongDateOfBirth extends Exception { }
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
@@ -22,8 +20,6 @@ class Main {
                 System.out.println("Błąd wejścia-wyjścia!");
             } catch (WrongStudentName e) {
                 System.out.println("Błędne imię studenta!");
-            } catch (WrongDateOfBirth e) {
-                System.out.println("Niepoprawna data urodzenia! Wprowadź poprawny format DD-MM-YYYY.");
             }
         }
     }
@@ -63,30 +59,11 @@ class Main {
         }
     }
 
-    public static String readDateOfBirth() throws WrongDateOfBirth {
-        while (true) {
-            System.out.println("Podaj datę urodzenia (DD-MM-YYYY): ");
-            String date = scan.next();
-
-            // Sprawdzanie poprawności formatu DD-MM-YYYY
-            if (Pattern.matches("\\d{2}-\\d{2}-\\d{4}", date)) {
-                String[] parts = date.split("-");
-                int day = Integer.parseInt(parts[0]);
-                int month = Integer.parseInt(parts[1]);
-                int year = Integer.parseInt(parts[2]);
-
-                if (day >= 1 && day <= 31 && month >= 1 && month <= 12 && year >= 1000 && year <= 9999) {
-                    return date;
-                }
-            }
-            System.out.println("Niepoprawna data! Wprowadź poprawną wartość w formacie DD-MM-YYYY.");
-        }
-    }
-
-    public static void exercise1() throws IOException, WrongStudentName, WrongDateOfBirth {
+    public static void exercise1() throws IOException, WrongStudentName {
         var name = readName();
         var age = readAge();
-        var date = readDateOfBirth();
+        System.out.println("Podaj datę urodzenia DD-MM-YYYY");
+        var date = scan.next();
         (new Service()).addStudent(new Student(name, age, date));
     }
 
